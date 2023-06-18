@@ -1,6 +1,5 @@
 from ariadne import MutationType
 from app.repository.player import player
-from app.repository.player.player import deletePlayer
 
 mutation = MutationType()
 
