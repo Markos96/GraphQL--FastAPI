@@ -1,33 +1,39 @@
 from app.config.db import SessionLocal
 from app.model.league import League
 from graphql import GraphQLError
+from fastapi import status
 
 session = SessionLocal()
 
 
-def create_league(leagueInput):
-    league = League(name=leagueInput.get("name"))
+def createLeague(leagueInput):
+    try:
+        league = League(**leagueInput)
+        session.add(league)
+        session.commit()
+        return league
 
-    session.add(league)
-    session.commit()
+    except:
+        session.rollback()
+        raise GraphQLError('Could not create league')
+    finally:
+        session.close()
 
 
-def modified_league(leagueInput, leagueID):
+def getLeague(leagueID):
     try:
         league = session.query(League).get(leagueID)
 
         if not league:
-            raise GraphQLError("The database does not contain players",
-                               extensions={"code": 404})
+            raise GraphQLError('League not found',
+                           extensions={"code": status.HTTP_404_NOT_FOUND})
 
-        for key, value in leagueInput.items():
-            if hasattr(league, key) and value is not None:
-                setattr(league, key, value)
+        return league
 
-        session.commit()
-
-    except Exception as error:
-        raise Exception(f"Occurred during from database {error}")
-
-    return league
+    except:
+        session.rollback()
+        raise GraphQLError('Error getting league',
+                           extensions={"code": status.HTTP_500_INTERNAL_SERVER_ERROR})
+    finally:
+        session.close()
 

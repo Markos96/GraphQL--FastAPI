@@ -1,8 +1,12 @@
-from ariadne import QueryType
-from app.repository import league
+from ariadne import MutationType
+from app.repository.league import league
 
-query = QueryType()
+mutation = MutationType()
 
-@query.field("leagues")
-def resolveGetLeagues(obj, info):
-    return leagues
+@mutation.field("createLeague")
+def resolverCreateLeague(obj, info, leagueInput):
+    return league.createLeague(leagueInput)
+
+mutation_resolvers = {
+    "createLeague": resolverCreateLeague
+}

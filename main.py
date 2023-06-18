@@ -11,6 +11,8 @@ mutation = MutationType()
 
 schema = make_executable_schema(type_defs, query, mutation)
 
+
+
 app = FastAPI()
 
 origins = [
