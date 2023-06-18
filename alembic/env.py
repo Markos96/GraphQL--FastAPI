@@ -1,4 +1,5 @@
 from app.model.league import League
+from app.model.player import Player
 from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
@@ -20,6 +21,7 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 target_metadata = League.metadata
+target_metadata = Player.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
