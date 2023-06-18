@@ -5,11 +5,11 @@ query = QueryType()
 
 
 @query.field("team")
-def resolveGetTeam(obj, info, teamID):
+def resolverGetTeam(obj, info, teamID):
     return team.getByTeam(teamID)
 
 
 @query.field("teams")
-def resolveGetAllTeams(obj, info):
+def resolverGetAllTeams(obj, info):
     return team.getAllTeams()
 

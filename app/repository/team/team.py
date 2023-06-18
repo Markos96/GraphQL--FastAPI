@@ -17,8 +17,6 @@ def saveTeam(teamInput):
     except:
         session.rollback()
         raise GraphQLError("Error saving team")
-    finally:
-        session.close()
 
 
 def getByTeam(teamID):
@@ -33,8 +31,6 @@ def getByTeam(teamID):
     except:
         session.rollback()
         raise GraphQLError("Error getting team")
-    finally:
-        session.close()
 
 
 def getAllTeams():
@@ -44,8 +40,6 @@ def getAllTeams():
     except:
         session.rollback()
         raise GraphQLError("Error getting teams")
-    finally:
-        session.close()
 
 
 def modifiedTeam(teamInput, teamID):
@@ -66,8 +60,6 @@ def modifiedTeam(teamInput, teamID):
     except:
         session.rollback()
         raise GraphQLError("Error saving team")
-    finally:
-        session.close()
 
 
 def deleteTeam(teamID):
@@ -83,5 +75,3 @@ def deleteTeam(teamID):
     except:
         session.rollback()
         raise GraphQLError("Error deleting team")
-    finally:
-        session.close()

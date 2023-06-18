@@ -16,8 +16,6 @@ def createLeague(leagueInput):
     except:
         session.rollback()
         raise GraphQLError('Could not create league')
-    finally:
-        session.close()
 
 
 def getLeague(leagueID):
@@ -34,6 +32,15 @@ def getLeague(leagueID):
         session.rollback()
         raise GraphQLError('Error getting league',
                            extensions={"code": status.HTTP_500_INTERNAL_SERVER_ERROR})
-    finally:
-        session.close()
+
+
+def getAllLeagues():
+    try:
+        leagues = session.query(League).all()
+        return leagues
+
+    except:
+        session.rollback()
+        raise GraphQLError('Error getting leagues',
+                           extensions={"code": status.HTTP_500_INTERNAL_SERVER_ERROR})
 

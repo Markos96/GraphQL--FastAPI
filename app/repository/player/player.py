@@ -15,8 +15,6 @@ def savePlayer(playerInput):
     except Exception as e:
         session.rollback()
         raise GraphQLError(str(e))
-    finally:
-        session.close()
 
 
 def getByPlayer(playerID):
@@ -30,8 +28,6 @@ def getByPlayer(playerID):
     except Exception as e:
         session.rollback()
         raise GraphQLError(str(e))
-    finally:
-        session.close()
 
 
 def getAllPlayers():
@@ -41,8 +37,6 @@ def getAllPlayers():
     except Exception as e:
         session.rollback()
         raise GraphQLError(str(e))
-    finally:
-        session.close()
 
 
 def modifyPlayer(playerInput, playerID):
@@ -63,8 +57,6 @@ def modifyPlayer(playerInput, playerID):
     except Exception as e:
         session.rollback()
         raise GraphQLError(str(e))
-    finally:
-        session.close()
 
 
 def deletePlayer(playerID):
@@ -80,21 +72,16 @@ def deletePlayer(playerID):
     except Exception as e:
         session.rollback()
         raise GraphQLError(str(e))
-    finally:
-        session.close()
 
 
 def getPlayerByTeam(teamID):
     try:
-        players = session.query(Player).filter(Player.id_team == teamID)
+        players = session.query(Player).filter(Player.id_team == teamID).all()
 
         if not players:
             raise GraphQLError("Player not found",
                                extensions={"code": status.HTTP_404_NOT_FOUND})
-
+        return players
     except Exception as e:
         session.rollback()
         raise GraphQLError(str(e))
-
-    finally:
-        session.close()
